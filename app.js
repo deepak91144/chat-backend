@@ -1,6 +1,7 @@
 const { Socket } = require("socket.io");
 const cors = require("cors");
 const app = require("express")();
+
 const port = process.env.PORT || 8001;
 app.use(cors());
 const server = require("http").createServer(app);
@@ -8,6 +9,9 @@ const io = require("socket.io")(server, {
   cors: {
     origin: "*",
   },
+});
+app.get("/", (req, res) => {
+  res.json({ data: "ferf" });
 });
 io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
@@ -24,5 +28,5 @@ io.on("connection", (socket) => {
   });
 });
 server.listen(port, () => {
-  console.log("server running...");
+  console.log(`running at ${port}`);
 });
